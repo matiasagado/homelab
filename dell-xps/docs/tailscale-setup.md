@@ -1,8 +1,14 @@
 # Tailscale Setup
+
+> **Phase:** 0 — Foundation
+> **Depends on:** [Linux Installation](linux-install.md) (UFW must be active)
+> **Next:** [SSH Key Auth](ssh-key-auth.md) — uses the Tailscale IP for passwordless SSH
+> **Critical for:** All future services, they bind to the Tailscale IP, not the public internet
+
 **Date:** 2026-03-26
 
 ## Why
-Enables SSH access to the XPS from any network — coffee shops, libraries, anywhere — without exposing the machine directly to the public internet.
+Enables SSH access to the XPS from any network, without exposing the machine directly to the public internet.
 
 ## Installation
 ```bash
@@ -16,6 +22,5 @@ Authenticated via personal account at tailscale.com.
 - Accessible from any network as long as Tailscale is running on both devices
 
 ## Notes
-- Using personal account — not tied to any institution
 - Tailscale runs as a background service automatically on boot
-- UFW firewall still active — Tailscale handles encrypted tunneling on top
+- UFW firewall still active, Tailscale handles encrypted tunneling on top

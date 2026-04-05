@@ -1,4 +1,9 @@
 # Node.js Installation
+
+> **Phase:** 0 — Foundation
+> **Depends on:** [Linux Installation](linux-install.md)
+> **Note:** Installed for scripting and dev use. Not required by any Docker service, services bring their own runtimes.
+
 **Date:** 2026-03-26
 
 ## Version

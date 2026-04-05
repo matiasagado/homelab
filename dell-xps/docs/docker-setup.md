@@ -1,5 +1,10 @@
 # Docker Setup on Ubuntu 24.04 LTS
 
+> **Phase:** 0 — Foundation 
+> **Depends on:** [Linux Installation](linux-install.md) (OS must be installed and UFW active)
+> **Next:** [Node.js Installation](node-installation.md)
+> **Enables:** All future service deployments in `services/`
+
 **Date:** 2026-03-25  
 **Machine:** Dell XPS 15 9510
 **Docker Version:** 28.2.2

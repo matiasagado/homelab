@@ -1,5 +1,9 @@
 # Ubuntu LTS Installation on Dell XPS
 
+> **Phase:** 0 — Foundation
+> **Next:** [Docker Setup](docker-setup.md)
+> **Parent:** [Dell XPS README](../README.md)
+
 **Date:** 2026-03-25  
 **Machine:** Dell XPS 15 9510
 **OS Version:** Ubuntu 24.04.4 LTS

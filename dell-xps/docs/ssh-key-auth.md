@@ -1,4 +1,9 @@
 # SSH Key Authentication
+
+> **Phase:** 0 — Foundation
+> **Depends on:** [Tailscale Setup](tailscale-setup.md) — SSH config uses the Tailscale IP as the hostname
+> **Completes:** Machine is now remotely accessible and ready for service deployment.
+
 **Date:** 2026-03-26
 
 ## Why
