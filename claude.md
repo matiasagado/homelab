@@ -75,7 +75,7 @@ linux-install.md
 
 ---
 
-## Current State
+## Current State (Phase 1 complete)
 
 | Component | Version | Status |
 |---|---|---|
@@ -85,7 +85,9 @@ linux-install.md
 | Docker Engine | 28.2.2 | Installed |
 | Docker Compose | v2.20.2 | Installed (manual, not apt) |
 | Node.js | v20.20.0 | Installed |
-| Tailscale | Personal account | Running as boot service |
+| Tailscale | Personal account | Running — Mac ↔ XPS mesh confirmed |
+| 1Password | — | Installed on Mac |
+| Mullvad VPN | — | Installed on Mac, account-number auth only |
 
 ---
 
@@ -152,7 +154,10 @@ When starting a new conversation, I should know:
 | 2026-04-04 | Use one `docker-compose.yml` per service | Easier to restart/debug one service without touching others |
 | 2026-04-04 | All services behind Tailscale, no public exposure | Security — no attack surface on the open internet |
 | 2026-04-04 | Use Docker secrets for passwords, not `.env` in repo | Avoid committing credentials; `.env` files are gitignored |
-| 2026-04-04 | 1Password over self-hosted Bitwarden | Family UX — 1Password's apps are simpler for non-technical users |
+| 2026-04-04 | 1Password over self-hosted Bitwarden | Don't want to self-host a password manager, not worth the maintenance risk |
+| 2026-04-04 | Mullvad over other VPNs | Account-number only, no login or personal info required — genuinely anonymous |
+| 2026-04-04 | 1Password + Mullvad on Mac primarily | XPS is a dev machine; will install on XPS only if ever needed |
+| 2026-04-04 | Tailscale confirmed: Mac ↔ Dell XPS | Private mesh is live, all future services accessible via Tailscale from Mac |
 | 2026-04-04 | Start with `llama3.2:3b` for Ollama | Fast on CPU, low RAM, good enough for family use |
 
 ---
