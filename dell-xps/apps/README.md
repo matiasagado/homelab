@@ -16,4 +16,10 @@ Enhance privacy and security while keeping systems simple and reliable. Looking 
 
 ### Tailscale
 
-This encrypted mesh VPN that enables secure remote access to my homelab remotely from personal devices, without exposing services directly to the public internet. 
+This encrypted mesh VPN that enables secure remote access to my homelab remotely from personal devices, without exposing services directly to the public internet.
+
+## Network
+
+### Pi-hole
+
+DNS-level ad and tracker blocking for all devices on the network. Runs in Docker on the Dell XPS. Devices that use the XPS's Tailscale IP as their DNS server get automatic blocking — no client software needed.

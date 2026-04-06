@@ -14,8 +14,9 @@ Primary development and homelab machine. All current services run here.
 
 ## Naviagation
 
-* [Apps](apps/) - Services running on this machine and the app choices behind them.
-* [Docs](docs/) - Step-by-step installation and configuration guides.
+* [Apps](apps/) - Selected apps and services.
+* [Docs](docs/) - Setup, configuration, and documentation..
+* [Services](services/) - Infrastructure layer. 
 
 ## What This Enables
 

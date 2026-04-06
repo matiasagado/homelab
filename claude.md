@@ -3,7 +3,7 @@
 > This file is the evolving source of truth for this project.
 > It lives in both GitHub (clean) and Obsidian (thinking/notes).
 > Update it as decisions are made, plans change, or new context emerges.
-> Last updated: 2026-04-04
+> Last updated: 2026-04-05
 
 ---
 
@@ -87,7 +87,7 @@ linux-install.md
 
 ---
 
-## Current State (Phase 1 complete)
+## Current State (Phase 2 complete)
 
 | Component | Version | Status |
 |---|---|---|
@@ -100,6 +100,7 @@ linux-install.md
 | Tailscale | Personal account | Running — Mac ↔ XPS mesh confirmed |
 | 1Password | — | Installed on Mac |
 | Mullvad VPN | — | Installed on Mac, account-number auth only |
+| Pi-hole | latest | Running — DNS blocking active on XPS |
 
 ---
 
@@ -109,9 +110,10 @@ linux-install.md
 |---|---|---|---|
 | 1 | 1Password + Mullvad | Passwords + VPN | — |
 | 2 | Pi-hole | DNS ad blocking | 8080 (UI), 53 (DNS) |
-| 3 | Nextcloud | File storage, photo backup | 8081 |
-| 4 | Jellyfin | Media streaming | 8096 |
-| 5 | Ollama + Open WebUI | Local LLM, private AI | 11434, 3000 |
+| 3 | Nginx Proxy Manager | Reverse proxy + HTTPS for all services | 80, 443, 81 (admin) |
+| 4 | Nextcloud | File storage, photo backup | 8081 |
+| 5 | Jellyfin | Media streaming | 8096 |
+| 6 | Ollama + Open WebUI | Local LLM, private AI | 11434, 3000 |
 
 All services are accessed via **Tailscale IPs only** — nothing is exposed to the public internet.
 
@@ -133,7 +135,7 @@ All services are accessed via **Tailscale IPs only** — nothing is exposed to t
 - SSH: ED25519 key auth only, no passwords
 - Firewall: UFW active, only necessary ports open
 - Secrets: Never hardcoded in compose files — use Docker secrets or `.env` files (gitignored)
-- DNS: Pi-hole will handle all DNS (blocks trackers and ads at network level)
+- DNS: Pi-hole handles all DNS (blocks trackers and ads at network level) — running on XPS
 - Password management: 1Password family vault
 
 Full detail will go in `docs/security-model.md` once that file is created.
@@ -171,6 +173,11 @@ When starting a new conversation, I should know:
 | 2026-04-04 | 1Password + Mullvad on Mac primarily | XPS is a dev machine; will install on XPS only if ever needed |
 | 2026-04-04 | Tailscale confirmed: Mac ↔ Dell XPS | Private mesh is live, all future services accessible via Tailscale from Mac |
 | 2026-04-04 | Start with `llama3.2:3b` for Ollama | Fast on CPU, low RAM, good enough for family use |
+| 2026-04-05 | Disable `systemd-resolved` before running Pi-hole | Ubuntu 24.04 holds port 53 — Pi-hole can't bind without disabling it first |
+| 2026-04-05 | Pi-hole password via `.env` file using `FTLCONF_webserver_api_password` | Pi-hole v6 API variable name — different from older `WEBPASSWORD` |
+| 2026-04-05 | Mac DNS must be manually pointed to XPS Tailscale IP | Pi-hole only blocks on devices that use it as their DNS server |
+| 2026-04-05 | Add Nginx Proxy Manager as Phase 3 | All services run HTTP by default — NPM adds HTTPS termination and removes browser "Not Secure" warnings |
+| 2026-04-05 | Use self-signed cert (no domain owned) | No public domain available; self-signed requires one-time browser accept per device, then gone |
 
 ---
 
