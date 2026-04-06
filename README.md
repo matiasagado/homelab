@@ -15,14 +15,15 @@ Currently running on a Dell XPS 15 9510. Building toward a multi-node server rac
 
 ## Phase Status
 
-| Phase | Focus | Status |
-| ----- | ----- | ------ |
-| 0 | Foundation (OS, Docker, SSH, Tailscale) | Complete |
-| 1 | Core security (1Password, Mullvad VPN) | Complete |
-| 2 | Network protection (Pi-hole) | Pending |
-| 3 | Self-hosted cloud (Nextcloud) | Pending |
-| 4 | Media server (Jellyfin) | Pending |
-| 5 | Local AI (Ollama) | Pending |
+| Phase | Focus                                   | Status   |
+| -------| -----------------------------------------| ----------|
+| 0     | Foundation (OS, Docker, SSH, Tailscale) | Complete |
+| 1     | Core security (1Password, Mullvad VPN)  | Complete |
+| 2     | Network protection (Pi-hole)            | Complete |
+| 4     | Nginx                                   | Pending  |
+| 4     | Self-hosted cloud (Nextcloud)           | Pending  |
+| 5     | Media server (Jellyfin)                 | Pending  |
+| 6     | Local AI (Ollama)                       | Pending  |
 
 ## Goals
 
