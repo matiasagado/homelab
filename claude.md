@@ -25,6 +25,7 @@ homelab/
 │
 └── dell-xps/                  # Docs for the current active machine
     ├── README.md              # Machine specs, links to docs
+    ├── apps/                  # Service categories, each with app choices underneath
     └── docs/
         ├── linux-install.md   # Phase 0: OS install, UFW, SSH server setup
         ├── docker-setup.md    # Phase 0: Docker Engine + Compose v2 install
@@ -35,16 +36,18 @@ homelab/
 
 ### Planned additions (from `next-steps.md`)
 ```
-├── services/
-│   ├── pihole/                # Phase 2
-│   ├── nextcloud/             # Phase 3
-│   ├── jellyfin/              # Phase 4
-│   └── ollama/                # Phase 5
-├── network/                   # Network topology, DNS config
-└── docs/
-    ├── architecture.md
-    ├── security-model.md
-    └── portfolio-guide.md
+└── dell-xps/
+    ├── apps/
+    │   ├── dns-blocking.md    # Phase 2 — Pi-hole
+    │   ├── file-storage.md    # Phase 3 — Nextcloud
+    │   ├── media-streaming.md # Phase 4 — Jellyfin, Plex, *arr stack
+    │   └── ai.md              # Phase 5 — Ollama + Open WebUI
+    └── docs/
+        ├── linux-install.md
+        ├── docker-setup.md
+        ├── node-installation.md
+        ├── ssh-key-auth.md
+        └── tailscale-setup.md
 ```
 
 ---

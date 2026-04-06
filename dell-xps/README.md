@@ -12,13 +12,10 @@ Primary development and homelab machine. All current services run here.
 - Storage: 512GB/1TB NVMe SSD
 - OS: Ubuntu 24.04.4 LTS
 
-## Setup Docs (read in order)
+## Naviagation
 
-1. [Linux Installation](docs/linux-install.md) — OS, UFW firewall, SSH server
-2. [Docker Setup](docs/docker-setup.md) — Docker Engine + Compose v2
-3. [Node.js Installation](docs/node-installation.md) — Node.js v20 runtime
-4. [Tailscale Setup](docs/tailscale-setup.md) — VPN for remote access
-5. [SSH Key Auth](docs/ssh-key-auth.md) — passwordless SSH over Tailscale
+[docs](docs/) - Step-by-step installation and configuration guides.
+[apps](apps/) - Services running on this machine and the app choices behind them.
 
 ## What This Enables
 
