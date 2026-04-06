@@ -42,6 +42,15 @@ homelab/
     │   ├── file-storage.md    # Phase 3 — Nextcloud
     │   ├── media-streaming.md # Phase 4 — Jellyfin, Plex, *arr stack
     │   └── ai.md              # Phase 5 — Ollama + Open WebUI
+    ├── services/
+    │   ├── pihole/            # Phase 2
+    │   │   └── docker-compose.yml
+    │   ├── nextcloud/         # Phase 3
+    │   │   └── docker-compose.yml
+    │   ├── jellyfin/          # Phase 4
+    │   │   └── docker-compose.yml
+    │   └── ollama/            # Phase 5
+    │       └── docker-compose.yml
     └── docs/
         ├── linux-install.md
         ├── docker-setup.md
