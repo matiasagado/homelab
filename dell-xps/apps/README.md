@@ -2,8 +2,7 @@
 
 # Applications
 
-This section documents the core applications used in my homelab environment, including their purpose, configuration decisions, and usage patterns.
----
+<p>This section documents the core applications used in my homelab environment, including their purpose, configuration decisions, and usage patterns.</p>
 
 ## Security & Privacy
 
