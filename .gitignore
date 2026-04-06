@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+.env.*
+
+# Obsidian
+.obsidian/
+
+# Local notes
+next-steps.md
+
+# Keys / secrets
+*.pem
+*.key
+id_rsa*
