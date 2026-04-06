@@ -12,4 +12,8 @@ I am using a managed solution rather than self-hosting. In the begginning stages
 
 ### Mullvad VPN
 
-Enhance privacy and security while keeping systems simple, reliable, and looking into self-hosting options (learning, control, cost savings).
+Enhance privacy and security while keeping systems simple and reliable. Looking into self-hosting options for learning, control, and cost savings.
+
+### Tailscale
+
+This encrypted mesh VPN that enables secure remote access to my homelab remotely from personal devices, without exposing services directly to the public internet. 
