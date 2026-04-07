@@ -46,13 +46,13 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 | 1 | Core security (1Password, Mullvad VPN) | — | Complete |
 | 2 | Network protection (Pi-hole) | Access | Complete |
 | 3 | Reverse proxy + container UI (NPM + Portainer) | Access + Infra | Pending |
-| 4 | Self-hosted cloud (Nextcloud) | User | Pending |
-| 5 | Photo backup (Immich) | User | Pending |
-| 6 | Media server (Jellyfin) | User | Pending |
-| 7 | Dashboard (Glance) | User | Pending |
-| 8 | Local AI (Ollama + Open WebUI) | Intelligence | Pending |
-| 9 | SSO + 2FA (Authelia) | Access | Pending |
-| 10 | Observability (Prometheus + Grafana + Loki) | Observability | Pending |
+| 4 | Observability (Prometheus + Grafana + Loki) | Observability | Pending |
+| 5 | SSO + 2FA (Authelia) | Access | Pending |
+| 6 | Self-hosted cloud (Nextcloud) | User | Pending |
+| 7 | Photo backup (Immich) | User | Pending |
+| 8 | Media server (Jellyfin) | User | Pending |
+| 9 | Dashboard (Glance) | User | Pending |
+| 10 | Local AI (Ollama + Open WebUI) | Intelligence | Pending |
 | 11 | AI Intelligence Layer (log analysis + anomaly alerts) | Intelligence | Pending |
 
 ---
