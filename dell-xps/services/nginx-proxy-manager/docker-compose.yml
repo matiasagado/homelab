@@ -7,6 +7,11 @@ services:
       - "80:80"
       - "443:443"
       - "81:81"
+    environment:
+      TZ: 'America/Los_Angeles'
+      FTLCONF_webserver_api_password: '${PIHOLE_PASSWORD}'
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_webserver_domain: 'npm.home'
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt

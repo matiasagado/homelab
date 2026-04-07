@@ -6,6 +6,11 @@ services:
     ports:
       - "9000:9000"
       - "9443:9443"
+    environment:
+      TZ: 'America/Los_Angeles'
+      FTLCONF_webserver_api_password: '${PIHOLE_PASSWORD}'
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_webserver_domain: 'portainer.home'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
