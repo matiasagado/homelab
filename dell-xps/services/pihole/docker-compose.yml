@@ -11,7 +11,7 @@ services:
       TZ: 'America/Los_Angeles'
       FTLCONF_webserver_api_password: '${PIHOLE_PASSWORD}'
       FTLCONF_dns_listeningMode: 'ALL'
-      FTLCONF_webserver_domain: '100.94.36.48'
+      FTLCONF_webserver_domain: 'pihole.home'
     volumes:
       - './etc-pihole:/etc/pihole'
     cap_add:
