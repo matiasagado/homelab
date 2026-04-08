@@ -1,30 +1,24 @@
-# Docker Setup on Ubuntu 24.04 LTS
+# Docker Setup
 
-> **Phase:** 0 — Foundation 
-> **Depends on:** [Linux Installation](linux-install.md) (OS must be installed and UFW active)
-> **Next:** [Node.js Installation](node-installation.md)
-> **Enables:** All future service deployments in `services/`
+Docker Engine and Compose v2 installed on Ubuntu 24.04.4 LTS. The `apt` repository ships an outdated Compose v1.19.2 — Compose v2 is installed manually as a Docker CLI plugin instead.
 
-**Date:** 2026-03-25  
-**Machine:** Dell XPS 15 9510
-**Docker Version:** 28.2.2
+## Installation
 
-## Docker Installation
+Install Docker Engine via the official script:
 
-1. Docker engine installed manually:
+```bash
+curl -fsSL https://get.docker.com | sh
+```
+
+Install Compose v2 manually as a CLI plugin:
 
 ```bash
 sudo mkdir -p /usr/local/lib/docker/cli-plugins
-sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64 \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 docker compose version
 ```
-
-### Docker Compose Issue
-
-- `docker compose` unknown command
-- Ubuntu package `docker-compose` old (v1.19.2)
-- Fixed by installing Compose v2 manually in `/usr/local/lib/docker/cli-plugins/`
 
 ## Add User to Docker Group
 
@@ -33,18 +27,17 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-## Test Docker
+Required to run Docker commands without `sudo`. The `newgrp` applies the change to the current shell without logging out.
+
+## Verify
 
 ```bash
 docker run hello-world
+docker compose version
 ```
 
-## Problems & Fixes
+## Known Issues and Tips
 
-| Problem                          | What Went Wrong                                         | How I Fixed It                                                        |
-| -------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------- |
-| Docker Compose command not found | Ubuntu package outdated, default repo missing v2 plugin | Installed Compose v2 manually in `/usr/local/lib/docker/cli-plugins/` |
-| Permission denied running Docker | User not in Docker group                                | Added user to Docker group, ran `newgrp docker`                       |
-| Old docker-compose conflicts     | Ubuntu repo installs v1.19.2                            | Removed old package after installing v2                               |
-
-## Notes
+- **`docker compose` command not found.** The Ubuntu `apt` package installs the legacy standalone v1 binary, not the v2 CLI plugin. Install v2 manually to `/usr/local/lib/docker/cli-plugins/` as shown above.
+- **Permission denied running Docker.** The current user must be in the `docker` group. Run `sudo usermod -aG docker $USER` then `newgrp docker`, or log out and back in.
+- **Don't use `sudo apt install docker-compose`.** This installs v1.19.2, which uses the old `docker-compose` command syntax and lacks v2 features.

@@ -1,30 +1,42 @@
 # SSH Key Authentication
 
-> **Phase:** 0 — Foundation
-> **Depends on:** [Tailscale Setup](tailscale-setup.md) — SSH config uses the Tailscale IP as the hostname
-> **Completes:** Machine is now remotely accessible and ready for service deployment.
+ED25519 key-based authentication for passwordless SSH access to the XPS over Tailscale. Faster, more secure, and eliminates password prompts during remote sessions.
 
-**Date:** 2026-03-26
+## Generate Key Pair (on Mac)
 
-## Why
-Eliminates password prompts when SSHing into the XPS. Faster, more secure, and cleaner for screenshares.
-
-## Setup
-Generated ED25519 key pair on Mac and copied public key to XPS:
 ```bash
-ssh-copy-id user@TS-IP
+ssh-keygen -t ed25519 -C "your-email@example.com"
 ```
 
-## SSH Config on Mac
+## Copy Public Key to XPS
+
+```bash
+ssh-copy-id user@<tailscale-ip>
+```
+
+## SSH Config (on Mac)
+
 ```
 # ~/.ssh/config
 Host dell-xps
-    HostName TS-IP
-    User user
+    HostName <tailscale-ip>
+    User matiasagado
 ```
 
-## Result
+With this config, connecting is a single command from any network:
+
 ```bash
 ssh dell-xps
 ```
-Connects instantly with no password prompt via Tailscale IP from any network.
+
+## XPS SSH Hardening
+
+Key settings applied in `/etc/ssh/sshd_config` on the XPS:
+
+```
+PasswordAuthentication no
+PermitRootLogin no
+MaxAuthTries 3
+```
+
+Restart SSH after changes: `sudo systemctl restart ssh`

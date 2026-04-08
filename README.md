@@ -4,9 +4,6 @@ A five-layer self-hosted infrastructure platform — user services, secure acces
 
 Currently running on a Dell XPS 15 9510 (Ubuntu 24.04). Building toward a multi-node server rack.
 
-> **AI context:** See [`claude.md`](claude.md) — source of truth for decisions and system state.
-> **Implementation plan:** See [`next-steps.md`](next-steps.md) — phased breakdown with compose files.
-
 ---
 
 ## Hardware
@@ -57,16 +54,6 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 
 ---
 
-## Goals
-
-- Replace consumer cloud services (Google Drive, iCloud) with self-hosted alternatives
-- Improve security and privacy for non-technical family members
-- Maintain reliability with minimal maintenance overhead
-- Full observability across all services (metrics, logs, dashboards)
-- AI-powered operations: automated log analysis, anomaly detection, and plain-English system health digests
-
----
-
 ## Tech Stack
 
 | Category       | Tools                                         |
@@ -89,9 +76,11 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 
 ```
 homelab/
-├── dell-xps/
-    ├── services/          # One folder per service — README + docker-compose.yml
-    ├── intelligence/      # AI log analysis scripts (Phase 11)
-    ├── network/           # Tailscale topology, DNS, UFW rules
-    └── docs/              # Architecture, security model, portfolio guide
+└── dell-xps/
+    ├── apps/              # Selected apps and services
+    ├── docs/              # Setup and configuration docs
+    └── services/          # One folder per service — README + docker-compose.yml
+        ├── pihole/
+        ├── nginx-proxy-manager/
+        └── portainer/
 ```

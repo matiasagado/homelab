@@ -1,23 +1,20 @@
-# Node.js Installation
+# Node.js
 
-> **Phase:** 0 — Foundation
-> **Depends on:** [Linux Installation](linux-install.md)
-> **Note:** Installed for scripting and dev use. Not required by any Docker service, services bring their own runtimes.
-
-**Date:** 2026-03-26
-
-## Version
-- Node.js v20.20.0
-- npm 10.8.2
+Node.js v20 installed on the XPS via NodeSource for scripting and development use. Not required by any Docker service — containerized services bring their own runtimes.
 
 ## Installation
+
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install nodejs -y
 ```
 
-## Verification
-```bash
-node --version   # v20.20.0
-npm --version    # 10.8.2
-```
+## Versions
+
+- Node.js: v20.20.0
+- npm: 10.8.2
+
+## Notes
+
+- Installed system-wide, not via `nvm` — simpler for a single-user machine
+- Available for automation scripts, local tooling, or testing service integrations

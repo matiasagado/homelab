@@ -1,36 +1,25 @@
-# Ubuntu LTS Installation on Dell XPS
+# Ubuntu LTS Installation
 
-> **Phase:** 0 — Foundation
-> **Next:** [Docker Setup](docker-setup.md)
-> **Parent:** [Dell XPS README](../README.md)
+Ubuntu 24.04.4 LTS installed on the Dell XPS 15 9510 as the foundation for all homelab services. Covers OS install, initial system setup, UFW, and SSH server configuration.
 
-**Date:** 2026-03-25  
-**Machine:** Dell XPS 15 9510
-**OS Version:** Ubuntu 24.04.4 LTS
+## OS Install
 
-## Linux Installation
+1. Download the Ubuntu LTS ISO
+2. Flash to USB with balenaEtcher
+3. Boot from USB and install — default partitioning, ext4 filesystem
 
-1. Downloaded Ubuntu LTS ISO.
-2. Created bootable USB with belenaEtcher.
-3. Installed Ubuntu:
-   - Partition layout: default partitioning
-   - File system: ext4
+## Initial Setup
 
-## Initial Configuration
-
-1. Installed updates
+Update the system and install essential tools:
 
 ```bash
 sudo apt update && sudo apt upgrade
-```
-
-2. Installed essential tools:
-
-```bash
 sudo apt install git curl wget build-essential htop tree net-tools unzip -y
 ```
 
-3. Enabled Firewall
+## Firewall
+
+UFW is enabled with SSH allowed before starting the SSH server:
 
 ```bash
 sudo ufw allow OpenSSH
@@ -38,18 +27,17 @@ sudo ufw enable
 sudo ufw status
 ```
 
-4. Installed, enabled, and verified SSH server:
+## SSH Server
 
 ```bash
 sudo apt install openssh-server -y
 sudo systemctl enable ssh
 sudo systemctl start ssh
-ssh matiasagado@127.0.0.1
 ```
 
 ## SSH Prompt Customization
 
-1. Show `(ssh)` in terminal only during SSH sessions
+Adding `(ssh)` to the terminal prompt only during SSH sessions makes it immediately clear when you're on the remote machine:
 
 ```bash
 # ~/.bashrc
@@ -58,15 +46,6 @@ if [ -n "$SSH_CONNECTION" ] && [ -n "$SSH_TTY" ]; then
 fi
 ```
 
-### Problems Encountered
+## Known Issues and Tips
 
-- Initial PS1 overrides color prompt
-- Some leftover session variable caused incorrect prompt
-
-## Problems & Fixes
-
-| Problem                                  | What Went Wrong                                | How I Fixed It                          |
-| ---------------------------------------- | ---------------------------------------------- | --------------------------------------- |
-| SSH prompt not showing `(ssh)` correctly | PS1 override removed colors; leftover env vars | Added SSH-aware PS1 with `$PS1` prepend |
-
-## Notes
+- **PS1 overrides can strip color.** Prepend `(ssh)` to `$PS1` rather than replacing it entirely to preserve the existing color prompt.
