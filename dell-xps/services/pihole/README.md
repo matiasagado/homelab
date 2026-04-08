@@ -8,20 +8,17 @@
 **Machine:** Dell XPS 15 9510
 **OS Version:** Ubuntu 24.04.4 LTS
 
----
 
 ## Overview
 
 Pi-hole runs in Docker and acts as a DNS server for all devices on the Tailscale network. It blocks ad and tracker domains before they ever reach a browser — no client software needed on end devices.
 
----
 
 ## Prerequisites
 
 - Docker Engine installed (`docker-setup.md`)
 - Tailscale running (`tailscale-setup.md`)
 
----
 
 ## Step 1 — Disable systemd-resolved
 
@@ -45,7 +42,6 @@ ping -c 1 google.com
 > echo "127.0.1.1 xps-homelab" | sudo tee -a /etc/hosts
 > ```
 
----
 
 ## Step 2 — Create the .env file
 
@@ -68,7 +64,6 @@ PIHOLE_PASSWORD=your-password-here
 
 This file is gitignored — never commit it.
 
----
 
 ## Step 3 — Start Pi-hole
 
@@ -87,7 +82,6 @@ curl -I http://localhost:8080/admin
 
 You should see `HTTP/1.1 200 OK`.
 
----
 
 ## Step 4 — Access the dashboard
 
@@ -105,7 +99,6 @@ http://<tailscale-ip>:8080/admin
 
 Log in with the password from your `.env` file.
 
----
 
 ## Step 5 — Point Mac's DNS to Pi-hole
 
@@ -117,7 +110,6 @@ Remove existing DNS entries and add the XPS's Tailscale IP.
 
 After this, ad domains will be blocked on Mac and you can watch live queries in the Pi-hole dashboard under **Query Log**.
 
----
 
 ## How it stays running
 
@@ -131,14 +123,3 @@ sudo systemctl is-enabled docker
 
 Should return `enabled`.
 
----
-
-## Compose file reference
-
-Located at: `dell-xps/services/pihole/docker-compose.yml`
-
-Key settings:
-- Port `53` — DNS (TCP + UDP)
-- Port `8080` — Web UI (maps to container port 80)
-- Password via `FTLCONF_webserver_api_password` from `.env`
-- Data persisted to `./etc-pihole`
