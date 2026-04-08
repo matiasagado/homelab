@@ -1,28 +1,17 @@
-# Pi-hole Installation
+# Pi-hole
 
-> **Phase:** 2 — Network Protection
-> **Depends on:** [Docker Setup](docker-setup.md)
-> **Parent:** [Dell XPS README](../README.md)
+DNS-level ad and tracker blocking for all devices on the Tailscale network. Pi-hole runs in Docker, intercepts DNS queries, and blocks known ad and tracker domains before they reach a browser. No client software is needed on end devices — any device that uses the XPS Tailscale IP as its DNS server gets automatic blocking.
 
-**Date:** 2026-04-05
-**Machine:** Dell XPS 15 9510
-**OS Version:** Ubuntu 24.04.4 LTS
+## Navigation
 
+- [Compose File](docker-compose.yml)
+- [Pi-hole Docs](https://docs.pi-hole.net/)
 
-## Overview
+## Setup
 
-Pi-hole runs in Docker and acts as a DNS server for all devices on the Tailscale network. It blocks ad and tracker domains before they ever reach a browser — no client software needed on end devices.
+### Disable systemd-resolved
 
-
-## Prerequisites
-
-- Docker Engine installed (`docker-setup.md`)
-- Tailscale running (`tailscale-setup.md`)
-
-
-## Step 1 — Disable systemd-resolved
-
-Ubuntu 24.04 runs `systemd-resolved` on port 53 by default. Pi-hole needs port 53, so it must be disabled first.
+Ubuntu 24.04 runs `systemd-resolved` on port 53 by default. Pi-hole needs exclusive access to port 53. Disable the system resolver before starting the container:
 
 ```bash
 sudo systemctl stop systemd-resolved
@@ -31,95 +20,59 @@ sudo rm /etc/resolv.conf
 echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
 ```
 
-Verify DNS still works:
+### Environment
 
-```bash
-ping -c 1 google.com
-```
+Create a `.env` file in this directory with the admin password:
 
-> **Note:**  `sudo: unable to resolve host xps-homelab` warnings during this process. Commands still execute. Fix it by running:
-> ```bash
-> echo "127.0.1.1 xps-homelab" | sudo tee -a /etc/hosts
-> ```
-
-
-## Step 2 — Create the .env file
-
-Navigate to the Pi-hole service directory:
-
-```bash
-cd ~/Portfolio/homelab/dell-xps/services/pihole
-```
-
-Create a `.env` file with your web interface password:
-
-```bash
-nano .env
-```
-
-Contents:
 ```
 PIHOLE_PASSWORD=your-password-here
 ```
 
-This file is gitignored — never commit it.
+This file is gitignored and must never be committed.
 
+### Compose
 
-## Step 3 — Start Pi-hole
-
-```bash
-docker compose up -d
+```yaml
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
+    environment:
+      TZ: 'America/Los_Angeles'
+      FTLCONF_webserver_api_password: '${PIHOLE_PASSWORD}'
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_webserver_domain: 'pihole.home'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+    cap_add:
+      - SYS_NICE
+      - NET_ADMIN
+    restart: unless-stopped
 ```
 
-Docker will pull the `pihole/pihole:latest` image automatically. No need to clone any external repo.
+### DNS Records
 
-Verify it's running:
+Add a Local DNS record in the Pi-hole dashboard under **Local DNS → DNS Records** pointing `pihole.home` to the XPS Tailscale IP. Any device using Pi-hole as its resolver can then reach the admin UI at `https://pihole.home`.
 
-```bash
-docker compose ps
-curl -I http://localhost:8080/admin
-```
+### Pointing Devices to Pi-hole
 
-You should see `HTTP/1.1 200 OK`.
-
-
-## Step 4 — Access the dashboard
-
-Find your XPS's Tailscale IP:
-
-```bash
-tailscale ip -4
-```
-
-Open in your browser:
-
-```
-http://<tailscale-ip>:8080/admin
-```
-
-Log in with the password from your `.env` file.
-
-
-## Step 5 — Point Mac's DNS to Pi-hole
-
-Pi-hole only blocks ads on devices that use it as their DNS server. The XPS gets blocking automatically since Pi-hole runs locally. For your Mac:
+Pi-hole only blocks on devices that use it as their DNS server. On Mac:
 
 **System Settings → Network → Wi-Fi → Details → DNS**
 
-Remove existing DNS entries and add the XPS's Tailscale IP.
+Remove existing DNS entries and add the XPS Tailscale IP. Live queries appear in the Pi-hole dashboard under **Query Log**.
 
-After this, ad domains will be blocked on Mac and you can watch live queries in the Pi-hole dashboard under **Query Log**.
+## Access
 
+Admin UI is available at `http://<tailscale-ip>:8080/admin` directly, or `https://pihole.home` once an NPM proxy host is configured.
 
-## How it stays running
+## Known Issues and Tips
 
-The compose file uses `restart: unless-stopped` Pi-hole restarts automatically after crashes or reboots. Docker itself is enabled as a systemd service, so it starts on boot.
-
-Verify Docker starts on boot:
-
-```bash
-sudo systemctl is-enabled docker
-```
-
-Should return `enabled`.
-
+- **`sudo: unable to resolve host xps-homelab`** warnings appear when disabling `systemd-resolved`. Commands still execute. Fix with: `echo "127.0.1.1 xps-homelab" | sudo tee -a /etc/hosts`
+- **Pi-hole v6 uses `FTLCONF_webserver_api_password`** for the admin password — the older `WEBPASSWORD` variable is not supported in v6.
+- **`FTLCONF_webserver_domain` must match the proxy hostname.** If using NPM, set it to `pihole.home` or proxied requests will return an Access Denied page.
+- **Internet access is lost if the XPS goes offline** and a client device has only Pi-hole set as DNS. Add a fallback DNS (e.g. `1.1.1.1`) as a secondary entry on client devices.

@@ -1,29 +1,39 @@
 # Portainer
 
-> **Phase:** 3 — Infrastructure
-> **Depends on:** [Docker Setup](../../docs/docker-setup.md), [Nginx Proxy Manager](../nginx-proxy-manager/README.md)
-> **Parent:** [Dell XPS README](../../README.md)
+Web UI for managing Docker containers without SSH. Provides a live view of container status, logs, restarts, and volume inspection for all services running on the XPS.
 
-**Date:** 2026-04-07
-**Machine:** Dell XPS 15 9510
-**OS:** Ubuntu 24.04.4 LTS
+## Navigation
 
+- [Compose File](docker-compose.yml)
+- [Official Docs](https://docs.portainer.io/)
 
-## Overview
+## Compose
 
-Portainer provides a web interface for viewing container status, reading logs, restarting services, and inspecting volumes and networks, without needing to SSH in and run CLI commands.
+```yaml
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
 
+volumes:
+  portainer-data:
+```
 
-## Notes on Setup
+Portainer requires access to the Docker socket (`/var/run/docker.sock`) to read and manage container state. It serves its UI over HTTPS using its own self-signed certificate on port 9443.
 
-No configuration issues. The compose file requires access to the Docker socket (`/var/run/docker.sock`).
+## Access
 
-Portainer serves its UI over HTTPS using its own self-signed certificate. This triggers a browser privacy warning on first visit. Clicking through (**Advanced → Proceed**) is a one-time step per browser — it does not reappear.
+Available at `https://portainer.home` via NPM, or directly at `https://<tailscale-ip>:9443`.
 
-Access is available at `https://portainer.home` via NPM.
+The first visit triggers a browser privacy warning from the self-signed cert. Clicking through **Advanced → Proceed** is a one-time step per browser.
 
+## Notes
 
-## Decision: Keep or Drop?
-
-Portainer was questioned during setup — if Docker Compose files are already in place, the CLI covers everything Portainer does. The conclusion was to keep it for convenience, particularly for quickly checking container health or logs without SSHing in. It adds no maintenance burden and does not interfere with Compose-based workflows.
-
+Portainer overlaps with the Docker CLI — everything it shows is also accessible via `docker compose` commands over SSH. It stays in the stack for convenience: checking container health or tailing logs through a browser is faster than SSHing in, particularly for non-technical users.
