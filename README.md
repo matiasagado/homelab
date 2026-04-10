@@ -19,15 +19,15 @@ Currently running on a Dell XPS 15 9510 (Ubuntu 24.04). Building toward a multi-
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  USER LAYER          Glance · Nextcloud · Jellyfin · Immich  │
+│  USER LAYER          Glance · Nextcloud · Jellyfin · Immich │
 ├─────────────────────────────────────────────────────────────┤
-│  ACCESS LAYER        Nginx/Traefik · Tailscale · Authelia    │
+│  ACCESS LAYER        Nginx/Traefik · Tailscale · Authelia   │
 ├─────────────────────────────────────────────────────────────┤
-│  INFRASTRUCTURE      Docker Compose · Portainer              │
+│  INFRASTRUCTURE      Docker Compose · Portainer             │
 ├─────────────────────────────────────────────────────────────┤
-│  OBSERVABILITY       Prometheus · Grafana · Loki             │
+│  OBSERVABILITY       Prometheus · Grafana · Loki            │
 ├─────────────────────────────────────────────────────────────┤
-│  INTELLIGENCE        Ollama — log analysis · anomaly alerts  │
+│  INTELLIGENCE        Ollama — log analysis · anomaly alerts │
 └─────────────────────────────────────────────────────────────┘
 ```
 
