@@ -1,0 +1,34 @@
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: server-stats
+            servers:
+              - type: local
+                name: XPS
+                hostname-file: /host/etc/hostname
+                cpu-temp-file: /host/sys/class/thermal/thermal_zone0/temp
+                mountpoints:
+                  "/":
+                    name: root
+
+      - size: full
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Access
+                links:
+                  - title: Pi-hole
+                    url: https://pihole.home
+                  - title: Portainer
+                    url: https://portainer.home
+                  - title: Nginx Proxy Manager
+                    url: https://npm.home
+              - title: Observability
+                links:
+                  - title: Grafana
+                    url: https://grafana.home
+
+          - type: docker-containers
+            hide-by-default: false

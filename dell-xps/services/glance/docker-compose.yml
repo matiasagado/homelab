@@ -1,0 +1,17 @@
+services:
+  glance:
+    image: glanceapp/glance:latest
+    container_name: glance
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./glance.yml:/app/config/glance.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/hostname:/host/etc/hostname:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      TZ: "America/Los_Angeles"
