@@ -46,12 +46,12 @@ Adding a new bookmark or widget is a config edit — no rebuild, Glance hot-relo
 
 ## Access
 
-Reached at `https://home.home` via NPM. Proxy host points `home.home` to `host.docker.internal:8082`; the matching DNS record was added to Pi-hole's custom DNS list.
-
-Direct fallback is `http://<tailscale-ip>:8082` for when NPM is being touched.
+Reached at `https://glance.home` via NPM. The proxy host forwards to the host bridge gateway IP on the published port; the matching DNS record was added to Pi-hole's custom DNS list. Direct fallback is the Tailscale IP on the published port for when NPM is being touched.
 
 ## Known Issues and Tips
 
+- **New services need a UFW allow rule on the XPS.** UFW's default policy drops forwarded traffic, so the NPM-to-Glance bridge hop was silently dropped until `sudo ufw allow 8082/tcp` was added. Same pattern applies to every future service published on a new port.
+- **NPM proxy hosts on this stack use the bridge gateway IP, not `host.docker.internal`.** Some NPM advanced toggles (Cache Assets, Block Common Exploits, Websockets) render `proxy_pass` with a `$variable`, which forces request-time DNS resolution. Nginx's resolver doesn't read `/etc/hosts`, so `host.docker.internal` fails to resolve at request time — and it tries to DNS-resolve literal IPs too, which also fails. Setting the forward hostname to the bridge gateway IP directly avoids the entire resolver path.
 - **CPU temperature sensor path is hardware-specific.** The compose mounts `/sys` and the config reads `/sys/class/thermal/thermal_zone0/temp`. If that sensor doesn't exist on the host, the widget hides the field silently — no error. `ls /sys/class/thermal/` on the host shows which zone to point at.
 - **Docker socket is read-only.** Glance can read container state but cannot start, stop, or restart anything from the UI. That stays in Portainer.
 - **`.home` DNS comes from Pi-hole.** If Pi-hole is down or the device isn't using it as a resolver, the bookmark links resolve to nothing. Glance itself still loads on the Tailscale IP regardless.
