@@ -53,7 +53,6 @@ Each service gets a proxy host entry under **Hosts → Add Proxy Host**, pointin
 | `pihole.home`    | Pi-hole web UI  | 8080  |
 | `portainer.home` | Portainer       | 9443  |
 | `npm.home`       | NPM admin UI    | 81    |
-| `grafana.home`   | Grafana         | 3001  |
 
 To find the Docker bridge gateway IP:
 

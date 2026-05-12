@@ -126,18 +126,6 @@ cAdvisor runs `privileged: true` so it can read host cgroup and device data need
 
 Prometheus retains 30 days of metrics. Loki stores logs in the `loki-data` volume with no expiry — `retention_period` in `loki.yml` is the knob if disk usage grows.
 
-## NPM and DNS
-
-Only Grafana needs an external entry point — Prometheus, Loki, cAdvisor, and Node Exporter stay internal.
-
-| Domain         | Service | Forward Host          | Forward Port |
-|----------------|---------|-----------------------|--------------|
-| `grafana.home` | Grafana | Docker bridge gateway | `3001`       |
-
-Add the proxy host in NPM under **Hosts → Add Proxy Host**, attach the `*.home` custom cert, and enable Force SSL. Then add a Local DNS record in Pi-hole under **Local DNS → DNS Records** pointing `grafana.home` to the XPS Tailscale IP.
-
-The forward host is the Docker bridge gateway IP, not `host.docker.internal` — see the NPM README's Known Issues for why.
-
 ## Grafana Setup
 
 Two data sources, configured under **Connections → Data Sources**:
@@ -156,8 +144,7 @@ Community dashboards imported under **Dashboards → Import**:
 
 ## Access
 
-- `https://grafana.home` via NPM (HTTPS, requires DNS + proxy host)
-- `http://<tailscale-ip>:3001` direct
+Grafana is reached directly at `http://<tailscale-ip>:3001` — not behind NPM. The Docker bridge NPM lives on cannot reach the observability bridge across containers, so HTTPS termination via `grafana.home` does not work on this setup. Direct access over Tailscale is encrypted by the mesh anyway, so the practical security difference is small.
 
 Admin username is `admin`. Password is whatever was written to `./secrets/grafana_password.txt` before first boot.
 

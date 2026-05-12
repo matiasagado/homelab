@@ -38,7 +38,7 @@ Metrics collection engine. Scrapes container stats from cAdvisor and host-level 
 
 ### Grafana
 
-Dashboard and visualization layer for Prometheus metrics and Loki logs. Single pane of glass for the full stack — container health, host resources, and log explorer all in one UI at `https://grafana.home`.
+Dashboard and visualization layer for Prometheus metrics and Loki logs. Single pane of glass for the full stack — container health, host resources, and log explorer all in one UI.
 
 ### Loki
 
