@@ -44,9 +44,9 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 | 2     | Network protection (Pi-hole)                          | Access         | Complete |
 | 3     | Reverse proxy + container UI (NPM + Portainer)        | Access + Infra | Complete |
 | 4     | Observability (Prometheus + Grafana + Loki)           | Observability  | Complete |
-| 9     | Dashboard (Glance)                                    | User           | Pending  |
-| 10    | Local AI (Ollama + Open WebUI)                        | Intelligence   | Pending  |
-| 11    | AI Intelligence Layer (log analysis + anomaly alerts) | Intelligence   | Pending  |
+| 5     | Dashboard (Glance)                                    | User           | Pending  |
+| 6     | Local AI (Ollama + Open WebUI)                        | Intelligence   | Pending  |
+| 7     | AI Intelligence Layer (log analysis + anomaly alerts) | Intelligence   | Pending  |
 
 ---
 
