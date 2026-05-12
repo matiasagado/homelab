@@ -19,7 +19,7 @@ services:
     ports:
       - "8082:8080"
     volumes:
-      - ./glance.yml:/app/config/glance.yml:ro
+      - ./glance.yml:/app/glance.yml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/hostname:/host/etc/hostname:ro
       - /proc:/host/proc:ro
