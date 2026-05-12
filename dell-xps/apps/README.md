@@ -29,3 +29,29 @@ Reverse proxy in front of all homelab services. Routes traffic by domain name ra
 ### Portainer
 
 Web UI for managing Docker containers on the XPS. Used for checking container status, reading logs, and restarting services without SSH. Deployed alongside NPM as part of the infrastructure layer.
+
+## Observability
+
+### Prometheus
+
+Metrics collection engine. Scrapes container stats from cAdvisor and host-level stats from Node Exporter every 15 seconds. Stores 30 days of time-series data.
+
+### Grafana
+
+Dashboard and visualization layer for Prometheus metrics and Loki logs. Single pane of glass for the full stack — container health, host resources, and log explorer all in one UI at `https://grafana.home`.
+
+### Loki
+
+Log aggregation store. Receives Docker container logs from Promtail and makes them queryable in Grafana. Designed to index only metadata (labels), not log content — keeps storage lean.
+
+### Promtail
+
+Log collector that tails Docker container log files on the host and ships them to Loki. Runs as a sidecar to Loki in the same compose stack.
+
+### cAdvisor
+
+Exposes per-container CPU, memory, network, and filesystem metrics to Prometheus. Requires privileged access to read host cgroup data.
+
+### Node Exporter
+
+Exposes host-level system metrics (disk usage, memory, CPU load, network I/O) to Prometheus. Runs alongside cAdvisor to give a full picture of both containers and the underlying machine.

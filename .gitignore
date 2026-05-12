@@ -16,3 +16,4 @@ claude.md
 *.pem
 *.key
 id_rsa*
+secrets/
