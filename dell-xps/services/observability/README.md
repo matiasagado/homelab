@@ -73,8 +73,7 @@ services:
     container_name: promtail
     restart: unless-stopped
     volumes:
-      - /var/log:/var/log:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./promtail.yml:/etc/promtail/config.yml:ro
     command: -config.file=/etc/promtail/config.yml
     depends_on:
@@ -150,7 +149,7 @@ Admin username is `admin`. Password is whatever was written to `./secrets/grafan
 
 ## Known Issues and Tips
 
-- **Promtail labels are minimal.** The current pipeline extracts `stream` (stdout/stderr) only — container names and images are not labeled. For richer labels, switch the scrape config to `docker_sd_configs` and mount the Docker socket into Promtail.
+- **Promtail discovers containers via the Docker socket.** Each log line is labeled with `container` (container name), `service` (Compose service name), and `stream` (stdout/stderr). Filter in Loki with `{container="grafana"}` or `{service="loki"}`. The socket is mounted read-only — same trust posture as Portainer's socket mount.
 - **Loki has no log retention configured.** Logs accumulate indefinitely in the `loki-data` volume. Set `limits_config.retention_period` in `loki.yml` once disk usage becomes a concern.
 - **cAdvisor must run privileged.** It needs host cgroup and device access to report per-container CPU/memory. The trade-off is accepted because cAdvisor is a well-known image, not a custom container.
 - **The stack is the upstream for Phase 11.** Loki logs and Prometheus metrics are the input to Ollama-powered anomaly detection — don't drop retention without considering that downstream consumer.
