@@ -44,8 +44,8 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 | 2     | Network protection (Pi-hole)                          | Access         | Complete |
 | 3     | Reverse proxy + container UI (NPM + Portainer)        | Access + Infra | Complete |
 | 4     | Observability (Prometheus + Grafana + Loki)           | Observability  | Complete |
-| 5     | Dashboard (Glance)                                    | User           | Pending  |
-| 6     | Local AI (Ollama + Open WebUI)                        | Intelligence   | Pending  |
+| 5     | Dashboard (Glance)                                    | User           | Complete |
+| 6     | Local AI (Ollama + Open WebUI)                        | Intelligence   | Complete |
 | 7     | AI Intelligence Layer (log analysis + anomaly alerts) | Intelligence   | Pending  |
 
 ---
@@ -61,7 +61,7 @@ All services are accessed via Tailscale mesh VPN — nothing is exposed to the p
 | Container UI   | Portainer                                     |
 | Observability  | Prometheus, Grafana, Loki, Promtail, cAdvisor |
 | Dashboard      | Glance                                        |
-| AI             | Ollama (Llama 3.2), Open WebUI                |
+| AI             | Ollama (Qwen 2.5 7B + Coder 7B), Open WebUI   |
 
 ---
 
@@ -76,5 +76,7 @@ homelab/
         ├── pihole/
         ├── nginx-proxy-manager/
         ├── portainer/
-        └── observability/ # Prometheus, Grafana, Loki, Promtail, cAdvisor, Node Exporter
+        ├── observability/ # Prometheus, Grafana, Loki, Promtail, cAdvisor, Node Exporter
+        ├── glance/
+        └── ollama/        # Ollama + Open WebUI
 ```

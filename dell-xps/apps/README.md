@@ -55,3 +55,19 @@ Exposes per-container CPU, memory, network, and filesystem metrics to Prometheus
 ### Node Exporter
 
 Exposes host-level system metrics (disk usage, memory, CPU load, network I/O) to Prometheus. Runs alongside cAdvisor to give a full picture of both containers and the underlying machine.
+
+## User
+
+### Glance
+
+Single-page dashboard for the homelab. Shows bookmarks for every proxied service, a live Docker container monitor, and host stats (CPU, memory, temperature). The front door once a device is on Tailscale.
+
+## Intelligence
+
+### Ollama
+
+Local LLM runtime running two 7B models: `qwen2.5:7b` for generating synthetic data that powers the Foothold MVP simulation, and `qwen2.5-coder:7b` for the Phase 7 log-analysis cron that reads container logs out of Loki and surfaces errors with plain-English fix suggestions. API stays direct on the Tailscale IP — no NPM hop, to keep per-request latency low for high-frequency scripted calls.
+
+### Open WebUI
+
+ChatGPT-style web interface in front of Ollama. Used as a prompt lab — iterate on system prompts and structured-output formats in the browser before baking them into simulation or log-analysis scripts. Reachable at `https://chat.home`.
